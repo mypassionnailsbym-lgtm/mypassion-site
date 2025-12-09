@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1BCSVDE5QY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-1BCSVDE5QY');
+  </script>
+
+  <title>My Passion Nails by M</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="My Passion Nails by M — Twoje paznokcie – Twój styl. Stylizacja paznokci w Halle. Rezerwacja online." />
+
+  <!-- ✅ SEO / Social (bez domeny na ten moment) -->
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#00FF12" />
+
+  <meta property="og:site_name" content="My Passion Nails by M" />
+  <meta property="og:title" content="My Passion Nails by M" />
+  <meta property="og:description" content="My Passion Nails by M — Twoje paznokcie – Twój styl. Stylizacja paznokci w Halle. Rezerwacja online." />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="My Passion Nails by M" />
+  <meta name="twitter:description" content="My Passion Nails by M — Twoje paznokcie – Twój styl. Stylizacja paznokci w Halle. Rezerwacja online." />
+  <!-- /SEO -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <header class="main-header">
+    <div class="container header-inner">
+      <a class="logo-area" href="#hero" aria-label="My Passion Nails by M">
+        <img data-img="logo-placeholder" alt="Logo My Passion Nails by M" class="logo-img img-auto" />
+        <span class="logo-text" data-i18n="brandName">My Passion Nails by M</span>
+      </a>
+
+      <button class="burger" id="burger" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="#about" data-i18n="navAbout">O mnie</a>
+        <a href="#services" data-i18n="navServices">Oferta</a>
+        <a href="#booking" data-i18n="navBooking">Rezerwacja</a>
+        <a href="#gallery" data-i18n="navGallery">Galeria</a>
+        <a href="#shop" data-i18n="navShop">Sklep</a>
+        <a href="#contact" data-i18n="navContact">Kontakt</a>
+
+        <a
+          href="https://my-passion-nails-by-m.reservio.com/"
+          class="btn btn-primary btn-nav"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-i18n="navBookNow"
+        >
+          Umów wizytę
+        </a>
+      </nav>
+
+      <div class="lang-switcher">
+        <label for="language-switcher" class="visually-hidden" data-i18n="langLabel">Wybierz język</label>
+        <select id="language-switcher" aria-label="Language">
+          <option value="pl">PL</option>
+          <option value="fr">FR</option>
+          <option value="en">EN</option>
+          <option value="nl">NL</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="section hero">
+      <div class="container hero-inner">
+        <div class="hero-text reveal">
+          <p class="hero-kicker" data-i18n="heroKicker">Salon stylizacji paznokci</p>
+          <h1 class="hero-title" data-i18n="heroTitle">My Passion Nails by M</h1>
+          <p class="hero-subtitle" data-i18n="heroSubtitle">Twoje paznokcie – Twój styl.</p>
+
+          <p class="hero-subtext" data-i18n="heroSubtext">
+            Eleganckie, dopracowane stylizacje i spokojna atmosfera. Zadbane dłonie, które pasują do Ciebie.
+          </p>
+
+          <div class="hero-cta">
+            <a
+              href="https://my-passion-nails-by-m.reservio.com/"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-i18n="heroCtaPrimary"
+            >
+              Umów wizytę online
+            </a>
+
+            <a href="#contact" class="btn btn-outline" data-i18n="heroCtaSecondary">
+              Nie ma terminu? Napisz
+            </a>
+          </div>
+
+          <div class="hero-micro">
+            <span class="micro-pill" data-i18n="heroMicro1">Spokojna atmosfera</span>
+            <span class="micro-pill" data-i18n="heroMicro2">Indywidualne podejście</span>
+            <span class="micro-pill" data-i18n="heroMicro3">Perfekcyjny detal</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-glow" aria-hidden="true"></div>
+
+          <div class="hero-card">
+            <span class="hero-name" data-i18n="heroName">Magdalena</span>
+            <span class="hero-role" data-i18n="heroRole">Stylistka paznokci</span>
+            <p class="hero-note" data-i18n="heroNote">
+              Spokojna atmosfera, indywidualne podejście i stylizacje dopasowane do Twojego stylu życia.
+            </p>
+
+            <div class="hero-card-actions">
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Joseph%20Possozplein%209%2C%201500%20Halle"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-outline btn-small"
+                data-i18n="contactDirectionsBtn"
+              >
+                Trasa dojazdu
+              </a>
+
+              <a
+                href="https://my-passion-nails-by-m.reservio.com/"
+                class="btn btn-primary btn-small"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-i18n="heroQuickBook"
+              >
+                Szybka rezerwacja
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-photo reveal-soft">
+            <img data-img="nails5" alt="Stylizacja paznokci (podgląd)" class="img-auto hero-photo-img" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container about-inner">
+        <div class="about-text reveal">
+          <h2 class="section-title" data-i18n="aboutTitle">O mnie</h2>
+
+          <p class="section-lead" data-i18n="aboutLead">
+            Nazywam się Magdalena i jestem stylistką paznokci. Tworzę miejsce, w którym każda osoba może poczuć się piękna i zaopiekowana.
+          </p>
+
+          <p data-i18n="aboutBody1">
+            Kiedy byłam małą dziewczynką, moje życie diametralnie się zmieniło. W wyniku wypadku straciłam palec — i choć fizycznie się zagoiłam, emocjonalnie zostałam z tym doświadczeniem na wiele lat. Czułam się inna, niepewna i niewystarczająca.
+          </p>
+
+          <p data-i18n="aboutBody2">
+            Podczas wizyt w salonach kosmetycznych często spotykałam się z odmową lub nieprzyjemnymi komentarzami. Te sytuacje były bolesne. Z czasem jednak przerodziły się w siłę i determinację — postanowiłam stworzyć miejsce bez oceniania i odrzucenia. Tak narodziła się moja pasja.
+          </p>
+
+          <p data-i18n="aboutBody3">
+            Choć z wykształcenia jestem socjologiem, życie poprowadziło mnie inną drogą. Przeprowadzka za granicę była wyzwaniem — nowy język, kultura i praca daleka od moich zainteresowań. Mimo to nie przestałam rozwijać umiejętności w stylizacji paznokci.
+          </p>
+
+          <p data-i18n="aboutBody4">
+            Z czasem pojawiły się sukcesy: zostałam instruktorem stylizacji paznokci, publikowałam artykuły branżowe i zdobyłam tytuły na mistrzostwach stylizacji. To utwierdziło mnie w przekonaniu, że wybrałam właściwą drogę.
+          </p>
+
+          <p data-i18n="aboutBody5">
+            Dziś wspieram osoby, które chcą się rozwijać i wracać do swojej pasji — także te, które czują wypalenie. Moją misją jest inspirowanie i dawanie realnych narzędzi do działania.
+          </p>
+
+          <p data-i18n="aboutBody6">
+            Jeśli czujesz, że potrzebujesz wsparcia, wskazówek lub inspiracji – jestem tu, aby Ci pomóc!
+          </p>
+
+          <div class="about-actions">
+            <a
+              href="https://my-passion-nails-by-m.reservio.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+              data-i18n="aboutBookingBtn"
+            >
+              Umów wizytę online
+            </a>
+            <a href="#contact" class="btn btn-outline" data-i18n="aboutContactBtn">Napisz do mnie</a>
+          </div>
+        </div>
+
+        <div class="about-image-wrapper reveal">
+          <div class="about-image-frame">
+            <div class="personal-photos">
+              <img data-img="magdalena1" alt="Magdalena - stylistka paznokci" class="about-image main-photo img-auto" />
+              <div class="personal-thumbs">
+                <img data-img="magdalena2" alt="Magdalena podczas pracy" class="about-thumb img-auto" />
+                <img data-img="nails5" alt="Stylizacja paznokci - detal" class="about-thumb img-auto" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title" data-i18n="servicesTitle">Oferta / Zabiegi</h2>
+          <p class="section-lead" data-i18n="servicesLead">
+            Poniżej znajdziesz główne zabiegi dostępne w moim studio.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h3 data-i18n="serviceBasicTitle">Manicure klasyczny</h3>
+            <p data-i18n="serviceBasicDesc">Delikatne opracowanie paznokci i skórek, nadanie kształtu oraz pielęgnacja dłoni.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-droplet"></i></div>
+            <h3 data-i18n="serviceHybridTitle">Manicure hybrydowy (shellac)</h3>
+            <p data-i18n="serviceHybridDesc">Trwały manicure hybrydowy, który pozostaje estetyczny przez wiele dni.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-scissors"></i></div>
+            <h3 data-i18n="serviceHybridCuticlesTitle">Manicure hybrydowy z opracowaniem skórek</h3>
+            <p data-i18n="serviceHybridCuticlesDesc">Dokładne opracowanie skórek + stylizacja hybrydowa — dla maksymalnie zadbanego efektu.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-shield-heart"></i></div>
+            <h3 data-i18n="serviceGelNaturalTitle">Aplikacja żelu na naturalną płytkę</h3>
+            <p data-i18n="serviceGelNaturalDesc">Wzmocnienie naturalnej płytki żelem, bez przedłużania. Naturalny, elegancki efekt.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+            <h3 data-i18n="serviceGelCorrectionTitle">Korekta paznokci żelowych</h3>
+            <p data-i18n="serviceGelCorrectionDesc">Uzupełnienie stylizacji żelowej — wyrównanie odrostu i dopracowanie kształtu.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-crown"></i></div>
+            <h3 data-i18n="serviceSubscriptionTitle">Abonament na manicure</h3>
+            <p data-i18n="serviceSubscriptionDesc">Pakiet wizyt w korzystnej cenie — stała pielęgnacja i pewność terminów.</p>
+          </article>
+
+          <article class="service-card reveal">
+            <div class="service-icon"><i class="fa-solid fa-gem"></i></div>
+            <h3 data-i18n="serviceNailArtTitle">Nail Art / Zdobienia</h3>
+            <p data-i18n="serviceNailArtDesc">
+              Wykonuję również zdobienia. Proszę, daj znać podczas rezerwacji, że interesuje Cię nail art – czas wizyty może się wydłużyć.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="section section-highlight">
+      <div class="container booking-inner">
+        <div class="reveal">
+          <h2 class="section-title" data-i18n="bookingTitle">Rezerwacja online</h2>
+          <p class="section-lead" data-i18n="bookingLead">Wybierz dogodny termin bez telefonowania – kilka kliknięć i gotowe.</p>
+          <p class="booking-body" data-i18n="bookingBody">
+            Reservio pozwala sprawdzić dostępne godziny, wybrać zabieg i szybko potwierdzić wizytę. Wygodnie i 24/7.
+          </p>
+
+          <div class="booking-actions">
+            <a href="https://my-passion-nails-by-m.reservio.com/" class="btn btn-primary btn-large" target="_blank" rel="noopener noreferrer" data-i18n="bookingCta">
+              Zarezerwuj wizytę
+            </a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Joseph%20Possozplein%209%2C%201500%20Halle" class="btn btn-outline btn-large" target="_blank" rel="noopener noreferrer" data-i18n="contactDirectionsBtn">
+              Trasa dojazdu
+            </a>
+          </div>
+
+          <div class="booking-secondary">
+            <p class="booking-secondary__text" data-i18n="bookingAltText">
+              Nie widzisz dla siebie terminu? Napisz do mnie – wspólnie znajdziemy rozwiązanie.
+            </p>
+            <a class="btn btn-outline" href="#contact" data-i18n="bookingAltCta">Przejdź do formularza</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title" data-i18n="galleryTitle">Galeria</h2>
+          <p class="section-lead" data-i18n="galleryLead">Przykładowe stylizacje wykonane w My Passion Nails by M.</p>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+          <figure class="gallery-item reveal"><img data-img="nails1" alt="Stylizacja paznokci 1" class="img-auto" /></figure>
+          <figure class="gallery-item reveal"><img data-img="nails2" alt="Stylizacja paznokci 2" class="img-auto" /></figure>
+          <figure class="gallery-item reveal"><img data-img="nails3" alt="Stylizacja paznokci 3" class="img-auto" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" class="section">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title" data-i18n="shopTitle">Sklep – szkolenia online</h2>
+          <p class="section-lead" data-i18n="shopLead">
+            Wkrótce uruchomię sklep z moimi szkoleniami online (głównie po polsku, a docelowo również po francusku).
+          </p>
+
+          <div class="shop-placeholder">
+            <p data-i18n="shopPlaceholder">
+              Sekcja w przygotowaniu. Po uruchomieniu sklepu kursantki otrzymają dostęp do własnego panelu, gdzie po zakupie będą mogły się zalogować i przejść cały kurs online.
+            </p>
+
+            <div class="student-panel-preview">
+              <span class="panel-tag" data-i18n="shopPanelTag">Panel kursanta – wkrótce</span>
+              <p class="panel-description" data-i18n="shopPanelDesc">Konto z dostępem do lekcji wideo, materiałów PDF i aktualizacji.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-dark">
+      <div class="container contact-inner">
+        <div class="contact-info">
+          <div class="reveal">
+            <h2 class="section-title" data-i18n="contactTitle">Kontakt / Social Media</h2>
+            <p class="section-lead" data-i18n="contactLead">
+              Masz pytania lub nie widzisz terminu? Napisz do mnie – odpowiem najszybciej, jak to możliwe.
+            </p>
+          </div>
+
+          <div class="contact-details reveal">
+            <p><strong data-i18n="contactAddressLabel">Adres:</strong> <span data-i18n="contactAddress">Joseph Possozplein 9, 1500 Halle</span></p>
+            <p><strong>E-mail:</strong> <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a></p>
+          </div>
+
+          <div class="contact-actions reveal">
+            <a class="btn btn-outline" href="https://www.google.com/maps/dir/?api=1&destination=Joseph%20Possozplein%209%2C%201500%20Halle" target="_blank" rel="noopener noreferrer" data-i18n="contactDirectionsBtn">
+              Trasa dojazdu
+            </a>
+            <a class="btn btn-primary" href="https://my-passion-nails-by-m.reservio.com/" target="_blank" rel="noopener noreferrer" data-i18n="contactBookBtn">
+              Umów wizytę
+            </a>
+          </div>
+
+          <div class="social-links reveal">
+            <a href="https://www.facebook.com/mypassionnailsbym/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <i class="fab fa-facebook"></i><span class="social-label">Facebook</span>
+            </a>
+            <a href="https://www.tiktok.com/@mypassionnailsbym" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+              <i class="fab fa-tiktok"></i><span class="social-label">TikTok</span>
+            </a>
+          </div>
+
+          <div class="map-embed reveal" aria-label="Mapa dojazdu">
+            <iframe title="My Passion Nails by M - Halle" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Joseph%20Possozplein%209%2C%201500%20Halle&output=embed"></iframe>
+          </div>
+
+          <div class="contact-form-wrapper reveal" id="contact-form-wrapper">
+            <h3 class="contact-form-title" data-i18n="contactFormTitle">Napisz wiadomość</h3>
+            <p class="contact-form-intro" data-i18n="contactFormIntro">
+              Jeśli nie znalazłaś/eś terminu w rezerwacji online lub masz pytanie — wypełnij formularz.
+            </p>
+
+            <form id="contact-form" class="contact-form" action="mailto:studio@mypassionnailsbym.com" method="post" enctype="text/plain">
+              <div class="form-grid">
+                <div class="form-row">
+                  <label for="cf-name" data-i18n="contactFormName">Imię i nazwisko</label>
+                  <input type="text" id="cf-name" name="name" autocomplete="name" required />
+                </div>
+
+                <div class="form-row">
+                  <label for="cf-email" data-i18n="contactFormEmail">Adres e-mail</label>
+                  <input type="email" id="cf-email" name="email" autocomplete="email" required />
+                </div>
+
+                <div class="form-row">
+                  <label for="cf-phone" data-i18n="contactFormPhone">Numer telefonu (opcjonalnie)</label>
+                  <input type="tel" id="cf-phone" name="phone" autocomplete="tel" placeholder="Opcjonalnie" />
+                </div>
+
+                <div class="form-row">
+                  <label for="cf-topic" data-i18n="contactFormTopic">Temat</label>
+                  <select id="cf-topic" name="topic">
+                    <option value="visit" data-i18n="contactFormTopicVisit">Brak wolnego terminu</option>
+                    <option value="nailart" data-i18n="contactFormTopicNailArt">Nail art / zdobienia</option>
+                    <option value="course" data-i18n="contactFormTopicCourse">Szkolenia / kursy online</option>
+                    <option value="other" data-i18n="contactFormTopicOther">Inne</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="cf-message" data-i18n="contactFormMessage">Wiadomość</label>
+                <textarea id="cf-message" name="message" rows="4" required></textarea>
+              </div>
+
+              <div class="form-row form-row-consent">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="cf-consent" required />
+                  <span data-i18n="contactFormConsent">
+                    Zapoznałam/em się z polityką prywatności i wyrażam zgodę na kontakt w odpowiedzi na wiadomość.
+                  </span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary" data-i18n="contactFormSubmit">Wyślij wiadomość</button>
+
+              <p class="form-success-message" id="form-success-message" hidden data-i18n="contactFormSuccess">
+                Gotowe — otworzyłam/em Twoją pocztę. Kliknij “Wyślij” w mailu i gotowe.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div class="contact-logo-block reveal">
+          <div class="contact-logo-frame">
+            <img data-img="logo-placeholder" alt="Logo My Passion Nails by M" class="contact-logo-img img-auto" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container footer-inner">
+      <p class="footer-text">
+        © <span id="current-year"></span> <span data-i18n="brandNameFooter">My Passion Nails by M</span>.
+        <span data-i18n="footerRights">Wszelkie prawa zastrzeżone.</span>
+      </p>
+
+      <p class="footer-legal">
+        <a href="#" class="footer-link" data-legal="privacy" data-i18n="footerPrivacy">Polityka prywatności</a>
+        <span>·</span>
+        <a href="#" class="footer-link" data-legal="terms" data-i18n="footerTerms">Regulamin</a>
+        <span>·</span>
+        <a href="#" class="footer-link" data-legal="cookies" data-i18n="footerCookies">Cookies</a>
+      </p>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookies">
+    <p class="cookie-text" data-i18n="cookiesBannerText">
+      Ta strona wykorzystuje pliki cookie, aby poprawić komfort korzystania. Kontynuując, akceptujesz ich użycie.
+    </p>
+    <div class="cookie-banner-actions">
+      <button class="btn btn-primary btn-small" id="cookie-accept" data-i18n="cookiesBannerAccept">Akceptuję</button>
+    </div>
+  </div>
+
+  <div class="modal" id="legal-modal" aria-hidden="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Legal">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <h3 class="modal-title" id="modal-title">Dokumenty prawne</h3>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="./js/script.js" defer></script>
+</body>
+</html>
