@@ -1,5 +1,4 @@
 
-
 (() => {
   "use strict";
 
@@ -693,19 +692,6 @@
       const phMap = { pl: "Opcjonalnie", fr: "Optionnel", en: "Optional", nl: "Optioneel" };
       phone.placeholder = phMap[lang] || phMap.pl;
     }
-
-    // ✅ TŁUMACZENIE PRZYCISKU GOOGLE FORMS (tylko to)
-    const GOOGLE_FORMS_ID = "1FAIpQLScQFJ8OWPQlo8og15oz18KR66uWYP1ODrJTwcrLbGK_YQJGAw";
-    const btnTextMap = {
-      pl: "Otwórz formularz kontaktowy",
-      fr: "Ouvrir le formulaire de contact",
-      en: "Open the contact form",
-      nl: "Open het contactformulier"
-    };
-
-    $$(`a[href*="${GOOGLE_FORMS_ID}"]`).forEach((a) => {
-      a.textContent = btnTextMap[lang] || btnTextMap.pl;
-    });
   };
 
   if (langSelect) langSelect.value = activeLang;
