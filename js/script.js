@@ -1,4 +1,5 @@
 
+
 (() => {
   "use strict";
 
@@ -306,7 +307,7 @@
       contactFormSubmit: "Wyślij wiadomość",
       contactFormSuccess: "Gotowe — otworzyłam/em Twoją pocztę. Kliknij “Wyślij” w mailu i gotowe.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      // ✅ tłumaczenie przycisku do Google Forms
       contactFormButton: "Otwórz formularz kontaktowy",
 
       footerRights: "Wszelkie prawa zastrzeżone.",
@@ -421,7 +422,7 @@
       contactFormSubmit: "Envoyer",
       contactFormSuccess: "C’est prêt — ton application e-mail s’est ouverte. Clique sur « Envoyer » et c’est bon.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      // ✅ tłumaczenie przycisku do Google Forms
       contactFormButton: "Ouvrir le formulaire de contact",
 
       footerRights: "Tous droits réservés.",
@@ -535,7 +536,7 @@
       contactFormSubmit: "Send message",
       contactFormSuccess: "Done — your email app opened. Click “Send” in the email and you’re all set.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      // ✅ tłumaczenie przycisku do Google Forms
       contactFormButton: "Open contact form",
 
       footerRights: "All rights reserved.",
@@ -649,7 +650,7 @@
       contactFormSubmit: "Versturen",
       contactFormSuccess: "Klaar — je e-mailapp is geopend. Klik op ‘Verzenden’ en klaar.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      // ✅ tłumaczenie przycisku do Google Forms
       contactFormButton: "Open het contactformulier",
 
       footerRights: "Alle rechten voorbehouden.",
@@ -705,8 +706,7 @@
       phone.placeholder = phMap[lang] || phMap.pl;
     }
 
-    // ✅ DODANE — TYLKO tłumaczenie przycisku/linku do Google Forms (bez zmiany HTML)
-    // Szukamy linku w sekcji #contact, który prowadzi do docs.google.com/forms
+    // ✅ tłumaczenie przycisku/linku do Google Forms
     const googleFormBtn = document.querySelector('#contact a[href*="docs.google.com/forms"]');
     if (googleFormBtn) {
       googleFormBtn.textContent = dict.contactFormButton || "Otwórz formularz kontaktowy";
@@ -817,6 +817,13 @@
 
         <h4>9. Kontakt w sprawach związanych z ochroną danych</h4>
         <p>W sprawach związanych z ochroną danych osobowych oraz realizacją praw, o których mowa powyżej, kontakt z Administratorem jest możliwy pod adresem e-mail: <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>.</p>
+
+        <h4>10. Narzędzia analityczne i marketingowe</h4>
+        <p>1. Na stronie mogą być wykorzystywane narzędzia analityczne i marketingowe, takie jak <strong>Google Analytics 4 (GA4)</strong> oraz <strong>Meta Pixel (Facebook Pixel)</strong>.</p>
+        <p>2. Narzędzia te mogą zbierać informacje o sposobie korzystania ze strony (np. odwiedzane podstrony, czas wizyty, źródło ruchu, rodzaj urządzenia). Dane te co do zasady mają charakter zanonimizowany/statystyczny, jednak w połączeniu z innymi informacjami mogą stanowić dane osobowe.</p>
+        <p>3. Podstawą przetwarzania danych w ramach podstawowej analityki statystycznej jest prawnie uzasadniony interes Administratora (art. 6 ust. 1 lit. f RODO) polegający na prowadzeniu statystyk oraz rozwijaniu strony. W przypadku wykorzystywania tych narzędzi do celów marketingowych (remarketing, kierowanie reklam) podstawą może być również zgoda użytkownika, jeżeli zostanie wymagana przepisami prawa.</p>
+        <p>4. Dostawcą Google Analytics 4 jest <strong>Google Ireland Limited</strong>, a dostawcą Meta Pixel – <strong>Meta Platforms Ireland Limited</strong>. Podmioty te mogą działać jako odrębni administratorzy danych w rozumieniu RODO, zgodnie z własnymi zasadami i politykami prywatności.</p>
+        <p>5. Użytkownik może zarządzać ustawieniami cookies oraz innymi identyfikatorami w przeglądarce, w tym usuwać je lub blokować, co może mieć wpływ na zakres danych zbieranych przez wymienione narzędzia.</p>
       `,
       terms: `
         <h4>1. Informacje ogólne</h4>
@@ -921,6 +928,13 @@
 
         <h4>9. Contact</h4>
         <p>Pour toute question relative à la protection des données : <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>.</p>
+
+        <h4>10. Outils d’analyse et marketing</h4>
+        <p>1. Le site peut utiliser des outils d’analyse et de marketing tels que <strong>Google Analytics 4 (GA4)</strong> et <strong>Meta Pixel (Facebook Pixel)</strong>.</p>
+        <p>2. Ces outils peuvent collecter des informations sur la manière dont le site est utilisé (par exemple : pages consultées, durée de la visite, source du trafic, type d’appareil). Ces données sont en principe utilisées sous forme agrégée/statistique, mais peuvent, combinées à d’autres informations, constituer des données à caractère personnel.</p>
+        <p>3. La base juridique pour l’analyse statistique de base est l’intérêt légitime du responsable du traitement (art. 6(1)(f) du RGPD) consistant à analyser les statistiques et à améliorer le site. Lorsque ces outils sont utilisés à des fins marketing (remarketing, ciblage publicitaire), la base peut également être le consentement de l’utilisateur, lorsque celui-ci est requis par la loi.</p>
+        <p>4. Le fournisseur de Google Analytics 4 est <strong>Google Ireland Limited</strong>, et le fournisseur de Meta Pixel est <strong>Meta Platforms Ireland Limited</strong>. Ces entités peuvent agir en tant que responsables de traitement distincts au sens du RGPD, conformément à leurs propres conditions et politiques de confidentialité.</p>
+        <p>5. L’utilisateur peut gérer les cookies et autres identifiants dans son navigateur (blocage, suppression), ce qui peut limiter l’étendue des données collectées par ces outils.</p>
       `,
       terms: `
         <h4>1. Dispositions générales</h4>
