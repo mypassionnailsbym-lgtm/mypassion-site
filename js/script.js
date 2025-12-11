@@ -1,5 +1,4 @@
 
-
 (() => {
   "use strict";
 
@@ -307,7 +306,7 @@
       contactFormSubmit: "Wyślij wiadomość",
       contactFormSuccess: "Gotowe — otworzyłam/em Twoją pocztę. Kliknij “Wyślij” w mailu i gotowe.",
 
-      // ✅ tłumaczenie przycisku do Google Forms
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Otwórz formularz kontaktowy",
 
       footerRights: "Wszelkie prawa zastrzeżone.",
@@ -422,7 +421,7 @@
       contactFormSubmit: "Envoyer",
       contactFormSuccess: "C’est prêt — ton application e-mail s’est ouverte. Clique sur « Envoyer » et c’est bon.",
 
-      // ✅ tłumaczenie przycisku do Google Forms
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Ouvrir le formulaire de contact",
 
       footerRights: "Tous droits réservés.",
@@ -536,7 +535,7 @@
       contactFormSubmit: "Send message",
       contactFormSuccess: "Done — your email app opened. Click “Send” in the email and you’re all set.",
 
-      // ✅ tłumaczenie przycisku do Google Forms
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Open contact form",
 
       footerRights: "All rights reserved.",
@@ -650,7 +649,7 @@
       contactFormSubmit: "Versturen",
       contactFormSuccess: "Klaar — je e-mailapp is geopend. Klik op ‘Verzenden’ en klaar.",
 
-      // ✅ tłumaczenie przycisku do Google Forms
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Open het contactformulier",
 
       footerRights: "Alle rechten voorbehouden.",
@@ -706,7 +705,8 @@
       phone.placeholder = phMap[lang] || phMap.pl;
     }
 
-    // ✅ tłumaczenie przycisku/linku do Google Forms
+    // ✅ DODANE — TYLKO tłumaczenie przycisku/linku do Google Forms (bez zmiany HTML)
+    // Szukamy linku w sekcji #contact, który prowadzi do docs.google.com/forms
     const googleFormBtn = document.querySelector('#contact a[href*="docs.google.com/forms"]');
     if (googleFormBtn) {
       googleFormBtn.textContent = dict.contactFormButton || "Otwórz formularz kontaktowy";
