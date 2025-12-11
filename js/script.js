@@ -306,6 +306,9 @@
       contactFormSubmit: "Wyślij wiadomość",
       contactFormSuccess: "Gotowe — otworzyłam/em Twoją pocztę. Kliknij “Wyślij” w mailu i gotowe.",
 
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      contactFormButton: "Otwórz formularz kontaktowy",
+
       footerRights: "Wszelkie prawa zastrzeżone.",
       footerPrivacy: "Polityka prywatności",
       footerTerms: "Regulamin",
@@ -418,6 +421,9 @@
       contactFormSubmit: "Envoyer",
       contactFormSuccess: "C’est prêt — ton application e-mail s’est ouverte. Clique sur « Envoyer » et c’est bon.",
 
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      contactFormButton: "Ouvrir le formulaire de contact",
+
       footerRights: "Tous droits réservés.",
       footerPrivacy: "Politique de confidentialité",
       footerTerms: "Conditions / Règlement",
@@ -528,6 +534,9 @@
       contactFormConsent: "I have read the privacy policy and consent to being contacted in response to my message.",
       contactFormSubmit: "Send message",
       contactFormSuccess: "Done — your email app opened. Click “Send” in the email and you’re all set.",
+
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      contactFormButton: "Open contact form",
 
       footerRights: "All rights reserved.",
       footerPrivacy: "Privacy policy",
@@ -640,6 +649,9 @@
       contactFormSubmit: "Versturen",
       contactFormSuccess: "Klaar — je e-mailapp is geopend. Klik op ‘Verzenden’ en klaar.",
 
+      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
+      contactFormButton: "Open het contactformulier",
+
       footerRights: "Alle rechten voorbehouden.",
       footerPrivacy: "Privacybeleid",
       footerTerms: "Voorwaarden",
@@ -691,6 +703,13 @@
     if (phone) {
       const phMap = { pl: "Opcjonalnie", fr: "Optionnel", en: "Optional", nl: "Optioneel" };
       phone.placeholder = phMap[lang] || phMap.pl;
+    }
+
+    // ✅ DODANE — TYLKO tłumaczenie przycisku/linku do Google Forms (bez zmiany HTML)
+    // Szukamy linku w sekcji #contact, który prowadzi do docs.google.com/forms
+    const googleFormBtn = document.querySelector('#contact a[href*="docs.google.com/forms"]');
+    if (googleFormBtn) {
+      googleFormBtn.textContent = dict.contactFormButton || "Otwórz formularz kontaktowy";
     }
   };
 
@@ -782,7 +801,7 @@
         <h4>5. Informacje dotyczące płatności</h4>
         <p>1. W ramach prowadzonej działalności mogą być dostępne następujące metody płatności: <strong>płatność kartą</strong>, <strong>przelew bankowy</strong>, <strong>płatność gotówką</strong> oraz <strong>płatność mobilna/QR</strong> (np. kod QR generowany przez bank).</p>
         <p>2. Informacja o dostępności konkretnej metody płatności może zostać przekazana na etapie rezerwacji wizyty lub przed jej realizacją.</p>
-        <p>3. Działalność <strong>nie jest płatnikiem VAT</strong>, zgodnie z zasadami właściwymi dla rozliczeń obowiązujących w Belgii.</p>
+        <p>3. Działalność jest zarejestrowanym podatnikiem VAT, jednak korzysta ze zwolnienia z naliczania i odliczania podatku VAT zgodnie z obowiązującymi przepisami prawa podatkowego w Belgii.</p>
 
         <h4>6. Okres przechowywania danych</h4>
         <p>1. Dane przetwarzane w związku z korespondencją przechowywane są przez okres niezbędny do udzielenia odpowiedzi oraz prowadzenia komunikacji.</p>
@@ -886,7 +905,7 @@
         <h4>5. Informations relatives aux paiements</h4>
         <p>1. Les modes de paiement susceptibles d’être proposés sont : <strong>paiement par carte</strong>, <strong>virement bancaire</strong>, <strong>paiement en espèces</strong> et <strong>paiement mobile/QR</strong> (p. ex. un code QR généré par la banque).</p>
         <p>2. La disponibilité d’un mode de paiement donné peut être confirmée lors de la réservation ou avant la réalisation du rendez-vous.</p>
-        <p>3. L’activité <strong>n’est pas assujettie à la TVA</strong>, conformément aux règles applicables en Belgique.</p>
+        <p>3. L'activité est un assujetti à la TVA enregistré, mais bénéficie d’une exonération de la perception et de la déduction de la TVA conformément à la législation fiscale en vigueur en Belgique.</p>
 
         <h4>6. Durée de conservation</h4>
         <p>1. Les données traitées dans le cadre de la correspondance sont conservées pendant la durée nécessaire au traitement de la demande et aux échanges.</p>
