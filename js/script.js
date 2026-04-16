@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -306,7 +305,6 @@
       contactFormSubmit: "Wyślij wiadomość",
       contactFormSuccess: "Gotowe — otworzyłam/em Twoją pocztę. Kliknij “Wyślij” w mailu i gotowe.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Otwórz formularz kontaktowy",
 
       footerRights: "Wszelkie prawa zastrzeżone.",
@@ -421,7 +419,6 @@
       contactFormSubmit: "Envoyer",
       contactFormSuccess: "C’est prêt — ton application e-mail s’est ouverte. Clique sur « Envoyer » et c’est bon.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Ouvrir le formulaire de contact",
 
       footerRights: "Tous droits réservés.",
@@ -535,7 +532,6 @@
       contactFormSubmit: "Send message",
       contactFormSuccess: "Done — your email app opened. Click “Send” in the email and you’re all set.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Open contact form",
 
       footerRights: "All rights reserved.",
@@ -649,7 +645,6 @@
       contactFormSubmit: "Versturen",
       contactFormSuccess: "Klaar — je e-mailapp is geopend. Klik op ‘Verzenden’ en klaar.",
 
-      // ✅ DODANE — tylko tłumaczenie przycisku do Google Forms
       contactFormButton: "Open het contactformulier",
 
       footerRights: "Alle rechten voorbehouden.",
@@ -698,15 +693,12 @@
       }
     });
 
-    // placeholder “Opcjonalnie” w telefonie
     const phone = $("#cf-phone");
     if (phone) {
       const phMap = { pl: "Opcjonalnie", fr: "Optionnel", en: "Optional", nl: "Optioneel" };
       phone.placeholder = phMap[lang] || phMap.pl;
     }
 
-    // ✅ DODANE — TYLKO tłumaczenie przycisku/linku do Google Forms (bez zmiany HTML)
-    // Szukamy linku w sekcji #contact, który prowadzi do docs.google.com/forms
     const googleFormBtn = document.querySelector('#contact a[href*="docs.google.com/forms"]');
     if (googleFormBtn) {
       googleFormBtn.textContent = dict.contactFormButton || "Otwórz formularz kontaktowy";
@@ -727,20 +719,53 @@
   // ========= Cookies banner =========
   const cookieBanner = $("#cookie-banner");
   const cookieAccept = $("#cookie-accept");
-  const COOKIE_KEY = "cookieAccepted";
+  const COOKIE_KEY = "cookie_consent";
+  const LEGACY_COOKIE_KEY = "cookieAccepted";
 
   const hideCookieBanner = () => {
     if (!cookieBanner) return;
     cookieBanner.style.display = "none";
   };
 
+  const showCookieBanner = () => {
+    if (!cookieBanner) return;
+    cookieBanner.style.display = "";
+  };
+
+  const grantAnalyticsConsent = () => {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("consent", "update", {
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      analytics_storage: "granted"
+    });
+  };
+
   if (cookieBanner) {
-    const already = localStorage.getItem(COOKIE_KEY) === "1";
-    if (already) hideCookieBanner();
+    const alreadyAccepted =
+      localStorage.getItem(COOKIE_KEY) === "accepted" ||
+      localStorage.getItem(LEGACY_COOKIE_KEY) === "1";
+
+    if (alreadyAccepted) {
+      try {
+        localStorage.setItem(COOKIE_KEY, "accepted");
+        localStorage.setItem(LEGACY_COOKIE_KEY, "1");
+      } catch (e) {}
+      hideCookieBanner();
+      grantAnalyticsConsent();
+    } else {
+      showCookieBanner();
+    }
   }
+
   if (cookieAccept) {
     cookieAccept.addEventListener("click", () => {
-      localStorage.setItem(COOKIE_KEY, "1");
+      try {
+        localStorage.setItem(COOKIE_KEY, "accepted");
+        localStorage.setItem(LEGACY_COOKIE_KEY, "1");
+      } catch (e) {}
+      grantAnalyticsConsent();
       hideCookieBanner();
     });
   }
@@ -884,121 +909,10 @@
         <h4>6. Zmiany polityki</h4>
         <p>Polityka cookies może zostać zaktualizowana w przypadku zmian funkcjonalności strony lub zastosowania nowych narzędzi. Aktualna wersja polityki jest dostępna na stronie internetowej.</p>
       `
-    },
-
-    fr: {
-      privacy: `
-        <h4>1. Responsable du traitement</h4>
-        <p>1. Le responsable du traitement des données personnelles est <strong>My Passion Nails by M</strong> (activité indépendante en Belgique – entrepreneur individuel), adresse : <strong>Joseph Possozplein 9, 1500 Halle</strong>, e-mail : <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>.</p>
-        <p>2. Numéro d’entreprise (enterprise number) : <strong>800.748.163</strong>.</p>
-
-        <h4>2. Catégories de données traitées</h4>
-        <p>1. Dans le cadre de l’utilisation du site et/ou d’une prise de contact, les données suivantes peuvent être traitées : <strong>nom et prénom</strong>, <strong>adresse e-mail</strong>, ainsi que – si elles sont fournies – <strong>numéro de téléphone</strong>, <strong>objet et contenu du message</strong>.</p>
-        <p>2. L’étendue des données dépend du canal de contact choisi et des informations communiquées par la personne concernée.</p>
-
-        <h4>3. Finalités et bases juridiques du traitement</h4>
-        <p>Les données personnelles peuvent être traitées afin de :</p>
-        <ul>
-          <li><strong>répondre à la demande et assurer la correspondance</strong> – sur la base de l’art. 6(1)(b) du RGPD (mesures précontractuelles) et/ou de l’art. 6(1)(f) du RGPD (intérêt légitime à gérer la correspondance),</li>
-          <li><strong>traiter les demandes relatives aux disponibilités et à l’organisation des rendez-vous</strong> – sur la base de l’art. 6(1)(b) du RGPD,</li>
-          <li><strong>établir, exercer ou défendre des droits en justice</strong> – sur la base de l’art. 6(1)(f) du RGPD (intérêt légitime : protection des droits du responsable du traitement).</li>
-        </ul>
-
-        <h4>4. Réservations en ligne (Reservio)</h4>
-        <p>1. La prise de rendez-vous peut être effectuée via le service externe <strong>Reservio</strong>.</p>
-        <p>2. Les données communiquées lors de la réservation via Reservio peuvent être traitées conformément aux propres conditions et documents de Reservio.</p>
-        <p>3. Le responsable du traitement peut recevoir les informations liées à la réservation dans la mesure nécessaire à la réalisation du service et à la communication avec le Client.</p>
-
-        <h4>5. Informations relatives aux paiements</h4>
-        <p>1. Les modes de paiement susceptibles d’être proposés sont : <strong>paiement par carte</strong>, <strong>virement bancaire</strong>, <strong>paiement en espèces</strong> et <strong>paiement mobile/QR</strong> (p. ex. un code QR généré par la banque).</p>
-        <p>2. La disponibilité d’un mode de paiement donné peut être confirmée lors de la réservation ou avant la réalisation du rendez-vous.</p>
-        <p>3. L'activité est un assujetti à la TVA enregistré, mais bénéficie d’une exonération de la perception et de la déduction de la TVA conformément à la législation fiscale en vigueur en Belgique.</p>
-
-        <h4>6. Durée de conservation</h4>
-        <p>1. Les données traitées dans le cadre de la correspondance sont conservées pendant la durée nécessaire au traitement de la demande et aux échanges.</p>
-        <p>2. Elles peuvent être conservées également pendant la durée nécessaire à la sauvegarde d’éventuelles réclamations, en principe <strong>au maximum 12 mois</strong>, sauf obligation légale de conservation plus longue ou justification liée à la nature du dossier.</p>
-
-        <h4>7. Destinataires des données</h4>
-        <p>1. Les données personnelles peuvent être communiquées à des prestataires fournissant des services techniques et organisationnels (p. ex. services IT, hébergement de la messagerie).</p>
-        <p>2. Les données peuvent également être communiquées à <strong>Reservio</strong> dans la mesure liée à la gestion des réservations.</p>
-        <p>3. Les données personnelles <strong>ne sont ni vendues ni transmises</strong> à des tiers à des fins de marketing du responsable du traitement.</p>
-
-        <h4>8. Droits de la personne concernée</h4>
-        <p>La personne concernée dispose des droits prévus par le RGPD, notamment : droit d’accès, de rectification, d’effacement (dans les cas prévus), de limitation du traitement, de portabilité (lorsqu’il s’applique) ainsi que le droit d’opposition au traitement fondé sur l’art. 6(1)(f) du RGPD. Elle a également le droit d’introduire une réclamation auprès de l’autorité de contrôle compétente en Belgique.</p>
-
-        <h4>9. Contact</h4>
-        <p>Pour toute question relative à la protection des données : <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>.</p>
-
-        <h4>10. Outils d’analyse et marketing</h4>
-        <p>1. Le site peut utiliser des outils d’analyse et de marketing tels que <strong>Google Analytics 4 (GA4)</strong> et <strong>Meta Pixel (Facebook Pixel)</strong>.</p>
-        <p>2. Ces outils peuvent collecter des informations sur la manière dont le site est utilisé (par exemple : pages consultées, durée de la visite, source du trafic, type d’appareil). Ces données sont en principe utilisées sous forme agrégée/statistique, mais peuvent, combinées à d’autres informations, constituer des données à caractère personnel.</p>
-        <p>3. La base juridique pour l’analyse statistique de base est l’intérêt légitime du responsable du traitement (art. 6(1)(f) du RGPD) consistant à analyser les statistiques et à améliorer le site. Lorsque ces outils sont utilisés à des fins marketing (remarketing, ciblage publicitaire), la base peut également être le consentement de l’utilisateur, lorsque celui-ci est requis par la loi.</p>
-        <p>4. Le fournisseur de Google Analytics 4 est <strong>Google Ireland Limited</strong>, et le fournisseur de Meta Pixel est <strong>Meta Platforms Ireland Limited</strong>. Ces entités peuvent agir en tant que responsables de traitement distincts au sens du RGPD, conformément à leurs propres conditions et politiques de confidentialité.</p>
-        <p>5. L’utilisateur peut gérer les cookies et autres identifiants dans son navigateur (blocage, suppression), ce qui peut limiter l’étendue des données collectées par ces outils.</p>
-      `,
-      terms: `
-        <h4>1. Dispositions générales</h4>
-        <p>1. Les présentes conditions définissent les règles de prestation des services de stylisation des ongles fournis sous la marque <strong>My Passion Nails by M</strong>.</p>
-        <p>2. Elles s’appliqueront également, à l’avenir, à une offre numérique (p. ex. e-books, formations en ligne) disponible dans la section « Boutique », sous réserve des dispositions du point 6.</p>
-
-        <h4>2. Réservations de rendez-vous</h4>
-        <p>1. La réservation s’effectue notamment via le système externe <strong>Reservio</strong>.</p>
-        <p>2. Les conditions détaillées de réservation, y compris les disponibilités, les règles d’annulation, de modification du rendez-vous ainsi que d’éventuelles exigences supplémentaires, peuvent être indiquées dans Reservio ou communiquées au Client par correspondance.</p>
-        <p>3. Le Client est tenu de fournir les informations nécessaires à la réservation et à la communication relative au rendez-vous.</p>
-
-        <h4>3. Nail art / décorations</h4>
-        <p>1. En cas de souhait de décorations (nail art), le Client doit en informer lors de la réservation.</p>
-        <p>2. En raison de la nature des décorations, la durée de la prestation peut être prolongée.</p>
-
-        <h4>4. Paiements</h4>
-        <p>1. Le paiement des prestations peut être effectué par : <strong>carte</strong>, <strong>virement bancaire</strong>, <strong>espèces</strong> ou <strong>paiement mobile/QR</strong> (p. ex. un code QR généré par la banque).</p>
-        <p>2. La disponibilité d’un mode de paiement donné peut être confirmée lors de la réservation ou avant la réalisation du rendez-vous.</p>
-
-        <h4>5. Réclamations relatives aux services</h4>
-        <p>1. Toute remarque ou réclamation concernant le service doit être signalée dans les meilleurs délais ; le délai recommandé est <strong>48 heures à compter du rendez-vous</strong>.</p>
-        <p>2. La réclamation doit être envoyée par e-mail à : <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>, en décrivant le problème et, dans la mesure du possible, en joignant des photos.</p>
-        <p>3. Chaque réclamation est examinée individuellement, en tenant compte des circonstances.</p>
-
-        <h4>6. Offre future « Boutique » (contenus numériques)</h4>
-        <p>1. Après le lancement de la section « Boutique », les règles détaillées concernant l’achat, l’accès aux contenus numériques, l’éventuel droit de rétractation et la procédure de réclamation seront précisées dans une version complétée des conditions de vente de contenus numériques.</p>
-        <p>2. Jusqu’à ce lancement, le présent point a un caractère informatif.</p>
-
-        <h4>7. Contact</h4>
-        <p>Contact : <a href="mailto:mypassionnailsbym@gmail.com">mypassionnailsbym@gmail.com</a>.</p>
-      `,
-      cookies: `
-        <h4>1. Informations générales</h4>
-        <p>1. La présente politique décrit l’utilisation des cookies et de technologies similaires (y compris des mécanismes de stockage du navigateur tels que <strong>LocalStorage</strong>) sur le site <strong>My Passion Nails by M</strong>.</p>
-        <p>2. Ces solutions visent à assurer le bon fonctionnement du site et à améliorer le confort d’utilisation.</p>
-
-        <h4>2. Définition des cookies et technologies similaires</h4>
-        <p>1. Les <strong>cookies</strong> sont de petits fichiers texte enregistrés sur l’appareil de l’utilisateur lors de la consultation d’un site.</p>
-        <p>2. <strong>LocalStorage</strong> est un mécanisme de stockage du navigateur permettant de conserver certaines informations sur l’appareil de l’utilisateur, distinct des cookies sur le plan technique.</p>
-
-        <h4>3. Quelles informations sont enregistrées ?</h4>
-        <p>1. Le site utilise des mécanismes minimaux principalement afin de :</p>
-        <ul>
-          <li>mémoriser l’acceptation de l’information relative aux cookies,</li>
-          <li>mémoriser la langue choisie par l’utilisateur.</li>
-        </ul>
-        <p>2. À ces fins, les informations suivantes peuvent être enregistrées dans LocalStorage : <strong>cookieAccepted</strong> et <strong>siteLang</strong>.</p>
-
-        <h4>4. Base et portée de l’utilisation</h4>
-        <p>1. Les mécanismes utilisés ont un objectif essentiellement fonctionnel (bon fonctionnement et confort d’utilisation).</p>
-        <p>2. En cas d’ajout d’outils analytiques ou marketing, la présente politique sera mise à jour en conséquence.</p>
-
-        <h4>5. Gestion des cookies et de LocalStorage</h4>
-        <p>1. L’utilisateur peut à tout moment modifier les paramètres des cookies dans son navigateur, notamment les bloquer ou les supprimer.</p>
-        <p>2. Il est également possible de supprimer les données enregistrées dans LocalStorage via les paramètres du navigateur. Cela peut entraîner l’affichage à nouveau du message cookies et la nécessité de rechoisir la langue.</p>
-        <p>3. La limitation des cookies ou la suppression des données du navigateur peut affecter certaines fonctionnalités du site.</p>
-
-        <h4>6. Modifications de la politique</h4>
-        <p>La politique peut être mise à jour en cas de changement de fonctionnalités du site ou d’ajout de nouveaux outils. La version à jour est disponible sur le site.</p>
-      `
     }
   };
 
-  const getLegalLang = () => (activeLang === "fr" ? "fr" : "pl"); // w modalu tylko PL/FR
+  const getLegalLang = () => (activeLang === "fr" ? "fr" : "pl");
 
   const openLegal = (type) => {
     if (!modal || !modalTitle || !modalBody) return;
@@ -1022,7 +936,6 @@
     openModal();
   };
 
-  // Linki w stopce: data-legal="privacy" | "terms" | "cookies"
   $$(".footer-link[data-legal]").forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1031,7 +944,6 @@
     });
   });
 
-  // Odśwież treść modala po zmianie języka, jeśli jest otwarty
   if (langSelect) {
     langSelect.addEventListener("change", () => {
       if (modal?.getAttribute("aria-hidden") === "false" && modal.dataset.activeLegal) {
