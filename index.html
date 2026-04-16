@@ -4,13 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="facebook-domain-verification" content="qp4o2umdere35nvoe1n6zsl1279twj" />
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) + Consent Mode v2 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1BCSVDE5QY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
+    const savedConsent = localStorage.getItem('cookie_consent');
+
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+
+    if (savedConsent === 'accepted') {
+      gtag('consent', 'update', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'granted'
+      });
+    }
+
+    gtag('js', new Date());
     gtag('config', 'G-1BCSVDE5QY');
   </script>
 
@@ -476,5 +495,35 @@
   </div>
 
   <script src="./js/script.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const banner = document.getElementById('cookie-banner');
+      const acceptButton = document.getElementById('cookie-accept');
+
+      if (!banner || !acceptButton) return;
+
+      const savedConsent = localStorage.getItem('cookie_consent');
+
+      if (savedConsent === 'accepted') {
+        banner.style.display = 'none';
+      } else {
+        banner.style.display = '';
+      }
+
+      acceptButton.addEventListener('click', function () {
+        localStorage.setItem('cookie_consent', 'accepted');
+
+        gtag('consent', 'update', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'granted'
+        });
+
+        banner.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
