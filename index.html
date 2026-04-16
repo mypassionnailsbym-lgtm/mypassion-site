@@ -4,33 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="facebook-domain-verification" content="qp4o2umdere35nvoe1n6zsl1279twj" />
 
-  <!-- Google tag (gtag.js) + Consent Mode v2 -->
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1BCSVDE5QY"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    (function () {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-    const savedConsent = localStorage.getItem('cookie_consent');
+      var mpnStoredConsent = null;
+      try {
+        mpnStoredConsent = localStorage.getItem('cookie_consent');
+      } catch (e) {
+        mpnStoredConsent = null;
+      }
 
-    gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
-      wait_for_update: 500
-    });
-
-    if (savedConsent === 'accepted') {
-      gtag('consent', 'update', {
+      gtag('consent', 'default', {
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied',
-        analytics_storage: 'granted'
+        analytics_storage: 'denied',
+        wait_for_update: 500
       });
-    }
 
-    gtag('js', new Date());
-    gtag('config', 'G-1BCSVDE5QY');
+      if (mpnStoredConsent === 'accepted') {
+        gtag('consent', 'update', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'granted'
+        });
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'G-1BCSVDE5QY');
+    })();
   </script>
 
   <!-- Meta Pixel Code -->
@@ -497,33 +504,63 @@
   <script src="./js/script.js" defer></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const banner = document.getElementById('cookie-banner');
-      const acceptButton = document.getElementById('cookie-accept');
-
-      if (!banner || !acceptButton) return;
-
-      const savedConsent = localStorage.getItem('cookie_consent');
-
-      if (savedConsent === 'accepted') {
-        banner.style.display = 'none';
-      } else {
-        banner.style.display = '';
+    (function () {
+      function mpnBannerShow() {
+        var banner = document.getElementById('cookie-banner');
+        if (banner) {
+          banner.style.display = '';
+        }
       }
 
-      acceptButton.addEventListener('click', function () {
-        localStorage.setItem('cookie_consent', 'accepted');
+      function mpnBannerHide() {
+        var banner = document.getElementById('cookie-banner');
+        if (banner) {
+          banner.style.display = 'none';
+        }
+      }
 
-        gtag('consent', 'update', {
-          ad_storage: 'denied',
-          ad_user_data: 'denied',
-          ad_personalization: 'denied',
-          analytics_storage: 'granted'
-        });
+      function mpnReadConsent() {
+        try {
+          return localStorage.getItem('cookie_consent');
+        } catch (e) {
+          return null;
+        }
+      }
 
-        banner.style.display = 'none';
+      function mpnWriteConsent(value) {
+        try {
+          localStorage.setItem('cookie_consent', value);
+        } catch (e) {}
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var acceptButton = document.getElementById('cookie-accept');
+        var currentConsent = mpnReadConsent();
+
+        if (currentConsent === 'accepted') {
+          mpnBannerHide();
+        } else {
+          mpnBannerShow();
+        }
+
+        if (acceptButton) {
+          acceptButton.addEventListener('click', function () {
+            mpnWriteConsent('accepted');
+
+            if (typeof gtag === 'function') {
+              gtag('consent', 'update', {
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                analytics_storage: 'granted'
+              });
+            }
+
+            mpnBannerHide();
+          });
+        }
       });
-    });
+    })();
   </script>
 </body>
 </html>
