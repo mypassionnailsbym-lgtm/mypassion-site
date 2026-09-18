@@ -1913,6 +1913,15 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
     openModal();
   };
 
+  // Direct link to the existing privacy dialog.
+  const openPrivacyFromHash = () => {
+    if (window.location.hash === "#polityka-prywatnosci") {
+      openLegal("privacy");
+    }
+  };
+  window.addEventListener("hashchange", openPrivacyFromHash);
+  openPrivacyFromHash();
+
   $$(".footer-link[data-legal]").forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
