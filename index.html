@@ -721,6 +721,13 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 .first-visit{margin-top:2rem;max-width:65ch}.first-visit details{border-bottom:1px solid #cdd9ce}.first-visit p{line-height:1.7}
 .mobile-book{display:none}.micro-pill,.hero-role{font-size:.875rem}
 @media(max-width:760px){body{padding-bottom:6rem}.mobile-book{display:flex;position:fixed;bottom:max(1rem,env(safe-area-inset-bottom));left:1rem;right:1rem;z-index:900;justify-content:center;min-height:48px;box-shadow:0 6px 24px #0002}.cookie-banner{bottom:6rem}.hero-visual .hero-card{display:none}.hero-photo{margin-top:0}.first-visit{min-width:0}.service-card{min-width:0}}
+
+.nav-social{position:relative;flex-shrink:0}
+.nav-social summary{cursor:pointer;padding:10px 12px;font-size:14px;color:rgba(19,20,26,.86);border-radius:14px;white-space:nowrap}
+.nav-social summary:hover,.nav-social[open] summary{background:rgba(255,255,255,.75)}
+.nav-social-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:170px;display:flex;flex-direction:column;padding:8px;background:#fff;border:1px solid rgba(17,18,24,.10);border-radius:16px;box-shadow:0 10px 24px rgba(16,18,28,.12);z-index:13001}
+.nav-social summary:focus-visible,.nav-social-menu a:focus-visible{outline:2px solid #00a014;outline-offset:2px}
+@media(max-width:760px){.nav-social-menu{position:static;margin-top:4px;box-shadow:none}.nav-social summary{padding:12px}.main-nav{max-height:calc(100dvh - 90px);overflow-y:auto}}
 </style>
 <style>.service-card .service-price{font-size:1.5rem;font-weight:700;margin:.75rem 0;color:#13141a}.hero-visual{min-width:0}.header-inner{gap:12px}.logo-text{max-width:180px}.first-visit{width:100%}</style><script>
     (function () {
@@ -795,7 +802,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 <span></span><span></span><span></span>
 </button>
 <nav class="main-nav" id="main-nav">
-<a data-i18n="navServices" href="#services">Oferta</a><a data-i18n="navGallery" href="#gallery">Galeria</a><a data-i18n="navAbout" href="#about">O mnie</a><a data-i18n="navBooking" href="#booking">Rezerwacja</a><a data-i18n="navContact" href="#contact">Kontakt</a><a data-i18n="navShop" href="#shop">Szkolenia</a><a class="btn btn-primary btn-nav" data-i18n="navBookNow" href="https://my-passion-nails-by-m.reservio.com/" rel="noopener noreferrer" target="_blank">
+<a data-i18n="navServices" href="#services">Oferta</a><a data-i18n="navGallery" href="#gallery">Galeria</a><a data-i18n="navAbout" href="#about">O mnie</a><a data-i18n="navBooking" href="#booking">Rezerwacja</a><a data-i18n="navContact" href="#contact">Kontakt</a><details class="nav-social"><summary>Social Media</summary><div class="nav-social-menu"><a href="https://www.instagram.com/magdalena_okrasinska/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.facebook.com/mypassionnailsbym/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.tiktok.com/@mypassionnailsbym" target="_blank" rel="noopener noreferrer">TikTok</a></div></details><a data-i18n="navShop" href="#shop">Szkolenia</a><a class="btn btn-primary btn-nav" data-i18n="navBookNow" href="https://my-passion-nails-by-m.reservio.com/" rel="noopener noreferrer" target="_blank">
           Umów wizytę
         </a></nav>
 <div class="lang-switcher">
@@ -983,6 +990,9 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 <a aria-label="TikTok" href="https://www.tiktok.com/@mypassionnailsbym" rel="noopener noreferrer" target="_blank">
 <i class="fab fa-tiktok"></i><span class="social-label">TikTok</span>
 </a>
+<a aria-label="Instagram" href="https://www.instagram.com/magdalena_okrasinska/" rel="noopener noreferrer" target="_blank">
+<i class="fab fa-instagram" aria-hidden="true"></i><span class="social-label">Instagram</span>
+</a>
 </div>
 <div class="contact-form-wrapper reveal" id="contact-form-wrapper">
 <h3 class="contact-form-title" data-i18n="contactFormTitle">Napisz wiadomość</h3>
@@ -1021,6 +1031,17 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 </section></main>
 <footer class="main-footer">
 <div class="container footer-inner">
+<div class="social-links footer-social">
+<a aria-label="Facebook" href="https://www.facebook.com/mypassionnailsbym/" rel="noopener noreferrer" target="_blank">
+<i class="fab fa-facebook"></i><span class="social-label">Facebook</span>
+</a>
+<a aria-label="TikTok" href="https://www.tiktok.com/@mypassionnailsbym" rel="noopener noreferrer" target="_blank">
+<i class="fab fa-tiktok"></i><span class="social-label">TikTok</span>
+</a>
+<a aria-label="Instagram" href="https://www.instagram.com/magdalena_okrasinska/" rel="noopener noreferrer" target="_blank">
+<i class="fab fa-instagram" aria-hidden="true"></i><span class="social-label">Instagram</span>
+</a>
+</div>
 <p class="footer-text">
         © <span id="current-year"></span> <span data-i18n="brandNameFooter">My Passion Nails by M</span>.
         <span data-i18n="footerRights">Wszelkie prawa zastrzeżone.</span>
@@ -1108,6 +1129,13 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
     });
   }
 
+  const socialMenu = document.querySelector(".nav-social");
+  document.addEventListener("click", (event) => {
+    if (socialMenu && !socialMenu.contains(event.target)) socialMenu.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && socialMenu) socialMenu.open = false;
+  });
   // ========= Reveal =========
   const revealEls = $$(".reveal, .reveal-soft");
   if ("IntersectionObserver" in window) {
