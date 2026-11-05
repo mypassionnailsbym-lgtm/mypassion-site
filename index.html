@@ -731,6 +731,18 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 .nav-social-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:170px;display:flex;flex-direction:column;padding:8px;background:#fff;border:1px solid rgba(17,18,24,.10);border-radius:16px;box-shadow:0 10px 24px rgba(16,18,28,.12);z-index:13001}
 .nav-social summary:focus-visible,.nav-social-menu a:focus-visible{outline:2px solid #00a014;outline-offset:2px}
 @media(max-width:760px){.nav-social-menu{position:static;margin-top:4px;box-shadow:none}.nav-social summary{padding:12px}.main-nav{max-height:calc(100dvh - 90px);overflow-y:auto}}
+
+/* Keep the expanded navigation and language picker readable with the guide link. */
+.lang-switcher{flex-shrink:0}
+@media(min-width:1361px){.main-nav{flex-wrap:wrap;gap:4px}.main-nav a{white-space:nowrap}}
+@media (max-width:1360px){
+ .burger{display:inline-grid;place-items:center}
+ .main-nav{position:fixed;inset:70px 12px auto 12px;background:rgba(255,255,255,.97);border:1px solid rgba(17,18,24,.10);border-radius:22px;padding:12px;box-shadow:var(--shadow);display:none;flex-direction:column;align-items:stretch;gap:8px;z-index:13000;max-height:calc(100dvh - 90px);overflow-y:auto}
+ .main-nav.open,.main-nav.is-open{display:flex}
+ .main-nav a,.nav-social summary{padding:12px}
+ .nav-social-menu{position:static;margin-top:4px;box-shadow:none}
+ .btn-nav{width:100%}.lang-switcher{margin-left:auto}
+}
 </style>
 <style>.service-card .service-price{font-size:1.5rem;font-weight:700;margin:.75rem 0;color:#13141a}.hero-visual{min-width:0}.header-inner{gap:12px}.logo-text{max-width:180px}.first-visit{width:100%}</style><script>
     (function () {
@@ -805,7 +817,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 <span></span><span></span><span></span>
 </button>
 <nav class="main-nav" id="main-nav">
-<a data-i18n="navServices" href="#services">Oferta</a><a data-i18n="navGallery" href="#gallery">Galeria</a><a data-i18n="navAbout" href="#about">O mnie</a><a data-i18n="navBooking" href="#booking">Rezerwacja</a><a data-i18n="navContact" href="#contact">Kontakt</a><details class="nav-social"><summary>Social Media</summary><div class="nav-social-menu"><a href="https://www.instagram.com/magdalena_okrasinska/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.facebook.com/mypassionnailsbym/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.tiktok.com/@mypassionnailsbym" target="_blank" rel="noopener noreferrer">TikTok</a></div></details><a data-i18n="navShop" href="#shop">Szkolenia</a><a class="btn btn-primary btn-nav" data-i18n="navBookNow" href="https://my-passion-nails-by-m.reservio.com/" rel="noopener noreferrer" target="_blank">
+<a data-i18n="navServices" href="#services">Oferta</a><a data-i18n="navGallery" href="#gallery">Galeria</a><a data-i18n="navBlog" href="/blog/">Poradnik</a><a data-i18n="navAbout" href="#about">O mnie</a><a data-i18n="navBooking" href="#booking">Rezerwacja</a><a data-i18n="navContact" href="#contact">Kontakt</a><details class="nav-social"><summary>Social Media</summary><div class="nav-social-menu"><a href="https://www.instagram.com/magdalena_okrasinska/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.facebook.com/mypassionnailsbym/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.tiktok.com/@mypassionnailsbym" target="_blank" rel="noopener noreferrer">TikTok</a></div></details><a data-i18n="navShop" href="#shop">Szkolenia</a><a class="btn btn-primary btn-nav" data-i18n="navBookNow" href="https://my-passion-nails-by-m.reservio.com/" rel="noopener noreferrer" target="_blank">
           Umów wizytę
         </a></nav>
 <div class="lang-switcher">
@@ -1153,7 +1165,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
 
     $$("#main-nav a").forEach((a) => {
       a.addEventListener("click", () => {
-        if (window.matchMedia("(max-width: 760px)").matches) closeNav();
+        if (window.matchMedia("(max-width: 1360px)").matches) closeNav();
       });
     });
 
@@ -1205,6 +1217,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
       navServices: "Oferta",
       navBooking: "Rezerwacja",
       navGallery: "Galeria",
+      navBlog: "Poradnik",
       navShop: "Sklep",
       navContact: "Kontakt",
       navBookNow: "Umów wizytę",
@@ -1325,6 +1338,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
       navServices: "Prestations",
       navBooking: "Réservation",
       navGallery: "Galerie",
+      navBlog: "Conseils",
       navShop: "Boutique",
       navContact: "Contact",
       navBookNow: "Prendre RDV",
@@ -1445,6 +1459,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
       navServices: "Services",
       navBooking: "Booking",
       navGallery: "Gallery",
+      navBlog: "Nail care guide",
       navShop: "Shop",
       navContact: "Contact",
       navBookNow: "Book now",
@@ -1564,6 +1579,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
       navServices: "Diensten",
       navBooking: "Reserveren",
       navGallery: "Galerij",
+      navBlog: "Nageladvies",
       navShop: "Shop",
       navContact: "Contact",
       navBookNow: "Boek nu",
@@ -1688,6 +1704,8 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
   };
 
   const detectLanguage = () => {
+    const requested = new URLSearchParams(window.location.search).get("lang");
+    if (requested && dictionaries[requested]) return requested;
     const saved = siteStorage.getItem("siteLang");
     if (saved && dictionaries[saved]) return saved;
 
@@ -1702,6 +1720,7 @@ html.js .reveal-soft.is-visible{opacity:1; transform:translateY(0)}
     const dict = dictionaries[lang] || dictionaries.pl;
 
     document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n="navBlog"]').forEach(link => { link.href = lang === "pl" ? "/blog/" : "/blog/" + lang + "/"; });
     const labels = {pl:['Stylizacja paznokci','Magdalena — stylistka paznokci','Magdalena podczas pracy','Menu','Zamknij','Dokumenty'],fr:['Réalisation ongulaire','Magdalena — styliste ongulaire','Magdalena au travail','Menu','Fermer','Documents'],en:['Nail design','Magdalena — nail stylist','Magdalena at work','Menu','Close','Documents'],nl:['Nagelstyling','Magdalena — nagelstyliste','Magdalena aan het werk','Menu','Sluiten','Documenten']}[lang];
     document.querySelectorAll('img[data-img]').forEach(img=>{const k=img.dataset.img;img.alt=k==='logo-placeholder'?'My Passion Nails by M':k==='magdalena1'?labels[1]:k==='magdalena2'?labels[2]:labels[0]+' — My Passion Nails by M';});
     document.getElementById('language-switcher')?.setAttribute('aria-label',dict.langLabel);
