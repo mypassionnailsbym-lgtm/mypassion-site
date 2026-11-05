@@ -37,7 +37,7 @@ def render(md):
   else: result.append('<p>'+inline(block)+'</p>')
  return title,'\n'.join(result),headings
 def page(lang, article=False):
- d=LANGS[lang]; title,body,headings=render((ROOT/'blog/content'/f'{lang}.md').read_text())
+ d=LANGS[lang]; title,body,headings=render((ROOT/'blog/content'/d.get('content', f'{lang}.md')).read_text())
  path=article_path(lang) if article else d['path']; url=BASE+path
  page_title=title if article else d['blog']; desc=d['desc'] if article else d['intro']
  alternates='\n'.join(f'<link rel="alternate" hreflang="{l}" href="{BASE+(article_path(l) if article else v["path"])}">' for l,v in LANGS.items())
@@ -51,11 +51,11 @@ def page(lang, article=False):
   schema.update({'author':{'@type':'Person','name':'Magdalena','url':BASE+'/#about'},'datePublished':'2026-11-05','dateModified':'2026-11-05','mainEntityOfPage':url})
   toc='<details class="toc"><summary>'+d['toc']+'</summary><ol>'+''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i,t in headings)+'</ol></details>'
   content=f'''<header class="intro"><p class="eyebrow">{d['category']}</p><h1>{esc(title)}</h1><p class="article-meta">Magdalena · {BRAND} · <time datetime="2026-11-05">{d['date']}</time></p></header>
-<img class="article-photo" src="{IMAGE}" alt="{esc(d['alt'])}" width="1254" height="1254" fetchpriority="high">
+<img class="article-photo" src="{IMAGE}" alt="{esc(d['alt'])}" width="{d.get('width',1254)}" height="{d.get('height',1254)}" fetchpriority="high">
 <div class="article-body">{toc}{body}</div><div class="article-end"><a href="{d['path']}">← {d['back']}</a></div>'''
  else:
   content=f'''<header class="intro"><p class="eyebrow">{BRAND} · Halle</p><h1>{d['blog']}</h1><p>{esc(d['intro'])}</p></header>
-<article class="article-card"><a href="{article_path(lang)}" tabindex="-1" aria-hidden="true"><img src="{IMAGE}" alt="" width="1254" height="1254" fetchpriority="high"></a><div class="card-copy"><p class="eyebrow">{d['category']}</p><h2><a href="{article_path(lang)}">{esc(title)}</a></h2><p>{esc(d['excerpt'])}</p><a class="read-more" href="{article_path(lang)}">{d['read']} →</a></div></article>'''
+<article class="article-card"><a href="{article_path(lang)}" tabindex="-1" aria-hidden="true"><img src="{IMAGE}" alt="" width="{d.get('width',1254)}" height="{d.get('height',1254)}" fetchpriority="high"></a><div class="card-copy"><p class="eyebrow">{d['category']}</p><h2><a href="{article_path(lang)}">{esc(title)}</a></h2><p>{esc(d['excerpt'])}</p><a class="read-more" href="{article_path(lang)}">{d['read']} →</a></div></article>'''
  return f'''<!doctype html>
 <html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(page_title)} | {BRAND}</title><meta name="description" content="{esc(desc)}"><link rel="canonical" href="{url}">{alternates}
 <meta name="theme-color" content="#00FF12"><meta property="og:type" content="{'article' if article else 'website'}"><meta property="og:title" content="{esc(page_title)}"><meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}"><meta property="og:site_name" content="{BRAND}"><meta property="og:image" content="{BASE+IMAGE}"><meta property="og:image:alt" content="{esc(d['alt'])}"><meta property="og:locale" content="{dict(pl='pl_PL',fr='fr_BE',en='en_GB',nl='nl_BE')[lang]}"><meta name="twitter:card" content="summary_large_image"><meta name="author" content="Magdalena — {BRAND}">
@@ -67,3 +67,36 @@ for lang,d in LANGS.items():
   dest=ROOT/(article_path(lang) if is_article else d['path']).strip('/')/'index.html'
   dest.parent.mkdir(parents=True,exist_ok=True);dest.write_text(page(lang,is_article),encoding='utf-8')
 print('Built 4 guide pages and 4 complete articles.')
+
+# Second article: reuse the exact shared page template, styles and language UI.
+# Preserve the existing article editions and add the new card to each guide.
+GROWTH = {
+ 'pl': dict(slug='jak-rosnie-naturalny-paznokiec', desc='Jak rośnie naturalny paznokieć? Poznaj rolę macierzy, tempo wzrostu oraz powody, dla których uszkodzona płytka potrzebuje czasu, aby odrosnąć.', alt='Ten sam paznokieć kciuka: po lewej uszkodzona płytka, po prawej paznokieć po odrośnięciu', excerpt='Oliwka i cierpliwość pełnią różne role. Wyjaśniam, gdzie powstaje paznokieć, jak szybko rośnie i dlaczego uszkodzona część musi odrosnąć.'),
+ 'fr': dict(slug='croissance-ongle-naturel', desc='Comment pousse l’ongle naturel ? Découvrez le rôle de la matrice, la vitesse de croissance et pourquoi un ongle abîmé a besoin de temps pour repousser.', alt='Le même ongle de pouce : plaque abîmée à gauche, ongle après repousse à droite', excerpt='Les soins et le temps jouent des rôles différents. Découvrez où se forme l’ongle, à quelle vitesse il pousse et pourquoi la partie abîmée doit progressivement être remplacée.'),
+ 'en': dict(slug='how-natural-nails-grow', desc='How do natural nails grow? Learn about the nail matrix, growth rate and why a damaged nail plate needs time to grow out.', alt='The same thumbnail: damaged nail plate on the left and the nail after regrowth on the right', excerpt='Care and time play different roles. Learn where nails form, how quickly they grow and why the damaged part has to grow out.'),
+ 'nl': dict(slug='hoe-natuurlijke-nagels-groeien', desc='Hoe groeit een natuurlijke nagel? Lees over de nagelmatrix, de groeisnelheid en waarom een beschadigde nagelplaat tijd nodig heeft om uit te groeien.', alt='Dezelfde duimnagel: de beschadigde nagelplaat links en de nagel na uitgroei rechts', excerpt='Verzorging en tijd spelen elk een andere rol. Ontdek waar een nagel ontstaat, hoe snel hij groeit en waarom het beschadigde deel moet uitgroeien.')
+}
+LANGS = {lang: dict(d, **GROWTH[lang], content=f'growth/{lang}.md', width=1536, height=1024) for lang,d in LANGS.items()}
+IMAGE = '/images/blog-wzrost-paznokcia.webp'
+for lang,d in LANGS.items():
+ dest=ROOT/article_path(lang).strip('/')/'index.html'
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ dest.write_text(page(lang,True),encoding='utf-8')
+ guide=ROOT/d['path'].strip('/')/'index.html'
+ card=re.search(r'<article class="article-card">.*?</article>',page(lang),re.S).group(0)
+ existing=guide.read_text()
+ existing=existing.replace('<article class="article-card">',card+'\n<article class="article-card">',1)
+ guide.write_text(existing,encoding='utf-8')
+
+# Keep every language edition discoverable without duplicating sitemap entries.
+sitemap=ROOT/'sitemap.xml'
+xml=sitemap.read_text()
+entries=[]
+for lang in LANGS:
+ url=BASE+article_path(lang)
+ if '<loc>'+url+'</loc>' not in xml:
+  entries.append('<url><loc>'+url+'</loc><lastmod>2026-11-05</lastmod></url>')
+xml=xml.replace('</urlset>','\n'.join(entries)+'\n</urlset>')
+sitemap.write_text(xml,encoding='utf-8')
+print('Built 4 growth articles and added their cards to the 4 guides.')
+
