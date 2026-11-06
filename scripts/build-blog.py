@@ -48,10 +48,10 @@ def page(lang, article=False):
  crumbs=f'<a href="/?lang={lang}">{d["home"]}</a><span aria-hidden="true">/</span>'+(f'<a href="{d["path"]}">{d["blog"]}</a>' if article else f'<span>{d["blog"]}</span>')
  schema={'@context':'https://schema.org','@type':'BlogPosting' if article else 'CollectionPage','headline':page_title,'description':desc,'inLanguage':lang,'url':url,'image':BASE+IMAGE,'publisher':{'@type':'Organization','name':BRAND,'url':BASE}}
  if article:
-  schema.update({'author':{'@type':'Person','name':'Magdalena','url':BASE+'/#about'},'datePublished':'2026-11-05','dateModified':'2026-11-05','mainEntityOfPage':url})
+  schema.update({'author':{'@type':'Person','name':'Magdalena','url':BASE+'/#about'},'datePublished':d.get('iso_date','2026-11-05'),'dateModified':d.get('iso_date','2026-11-05'),'mainEntityOfPage':url})
   toc='<details class="toc"><summary>'+d['toc']+'</summary><ol>'+''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i,t in headings)+'</ol></details>'
-  content=f'''<header class="intro"><p class="eyebrow">{d['category']}</p><h1>{esc(title)}</h1><p class="article-meta">Magdalena · {BRAND} · <time datetime="2026-11-05">{d['date']}</time></p></header>
-<img class="article-photo" src="{IMAGE}" alt="{esc(d['alt'])}" width="{d.get('width',1254)}" height="{d.get('height',1254)}" fetchpriority="high">
+  content=f'''<header class="intro"><p class="eyebrow">{d['category']}</p><h1>{esc(title)}</h1><p class="article-meta">Magdalena · {BRAND} · <time datetime="{d.get('iso_date','2026-11-05')}">{d['date']}</time></p></header>
+<img class="article-photo" style="max-width:{d.get('photo_width',640)}px" src="{IMAGE}" alt="{esc(d['alt'])}" width="{d.get('width',1254)}" height="{d.get('height',1254)}" fetchpriority="high">
 <div class="article-body">{toc}{body}</div><div class="article-end"><a href="{d['path']}">← {d['back']}</a></div>'''
  else:
   content=f'''<header class="intro"><p class="eyebrow">{BRAND} · Halle</p><h1>{d['blog']}</h1><p>{esc(d['intro'])}</p></header>
@@ -99,4 +99,29 @@ for lang in LANGS:
 xml=xml.replace('</urlset>','\n'.join(entries)+'\n</urlset>')
 sitemap.write_text(xml,encoding='utf-8')
 print('Built 4 growth articles and added their cards to the 4 guides.')
+
+# Third article: single-use files and salon hygiene.
+HYGIENE = {
+ 'pl': dict(slug='dlaczego-jednorazowy-pilnik',category='Higiena manicure',date='6 listopada 2026',desc='Dlaczego jednorazowy pilnik ma znaczenie? Poznaj różnice między czyszczeniem, dezynfekcją i sterylizacją oraz moje zasady przygotowania do manicure.',alt='Zestaw do manicure: zapakowane pilniki, blok polerski i narzędzia w pakietach na tacy',excerpt='Nowy nie zawsze znaczy sterylny. Wyjaśniam, dlaczego pilnik jednorazowy wyrzucam po każdej wizycie i jak przygotowuję narzędzia do pracy.'),
+ 'fr': dict(slug='lime-a-usage-unique-manucure',category='Hygiène de la manucure',date='6 novembre 2026',desc='Pourquoi utiliser une lime à usage unique ? Découvrez les différences entre nettoyage, désinfection et stérilisation et ma préparation avant une manucure.',alt='Matériel de manucure sur un plateau : limes emballées, bloc polissoir et instruments sous sachets',excerpt='Neuf ne signifie pas toujours stérile. Découvrez pourquoi je jette la lime après chaque rendez-vous et comment je prépare mes instruments.'),
+ 'en': dict(slug='single-use-nail-file-manicure',category='Manicure hygiene',date='6 November 2026',desc='Why does a single-use nail file matter? Learn the differences between cleaning, disinfection and sterilisation, and how I prepare for each manicure.',alt='Manicure supplies on a tray: wrapped nail files, a buffer block and instruments in pouches',excerpt='New does not always mean sterile. Find out why I discard the file after every appointment and how I prepare my tools.'),
+ 'nl': dict(slug='wegwerpvijl-bij-manicure',category='Hygiëne bij manicure',date='6 november 2026',desc='Waarom is een wegwerpvijl belangrijk? Lees over reinigen, desinfecteren en steriliseren en hoe ik mijn werkplek en instrumenten voorbereid.',alt='Manicurematerialen op een schaal: verpakte vijlen, een bufferblok en instrumenten in zakjes',excerpt='Nieuw betekent niet altijd steriel. Ontdek waarom ik de vijl na elke afspraak weggooi en hoe ik mijn instrumenten voorbereid.')
+}
+LANGS = {lang: dict(d, **HYGIENE[lang], content=f'hygiene/{lang}.md', width=1122, height=1402, photo_width=440,iso_date='2026-11-06') for lang,d in LANGS.items()}
+IMAGE = '/images/blog-jednorazowy-pilnik.webp'
+for lang,d in LANGS.items():
+ dest=ROOT/article_path(lang).strip('/')/'index.html'
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ dest.write_text(page(lang,True),encoding='utf-8')
+ guide=ROOT/d['path'].strip('/')/'index.html'
+ card=re.search(r'<article class="article-card">.*?</article>',page(lang),re.S).group(0)
+ guide.write_text(guide.read_text().replace('<article class="article-card">',card+'\n<article class="article-card">',1),encoding='utf-8')
+xml=sitemap.read_text()
+for lang in LANGS:
+ url=BASE+article_path(lang)
+ if '<loc>'+url+'</loc>' not in xml:
+  xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-06</lastmod></url>\n</urlset>')
+sitemap.write_text(xml,encoding='utf-8')
+print('Built 4 hygiene articles and updated the guides and sitemap.')
+
 
