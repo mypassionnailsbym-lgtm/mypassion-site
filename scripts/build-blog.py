@@ -32,6 +32,8 @@ def render(md):
   if block.startswith('## '):
    title2=block[3:]; ident='section-'+str(len(headings)+1)
    headings.append((ident,title2));result.append(f'<h2 id="{ident}">{inline(title2)}</h2>')
+  elif block.startswith('### '):
+   result.append('<h3>'+inline(block[4:])+'</h3>')
   elif block.startswith('- '):
    result.append('<ul>'+''.join('<li>'+inline(line[2:])+'</li>' for line in block.splitlines())+'</ul>')
   else: result.append('<p>'+inline(block)+'</p>')
@@ -48,10 +50,14 @@ def page(lang, article=False):
  crumbs=f'<a href="/?lang={lang}">{d["home"]}</a><span aria-hidden="true">/</span>'+(f'<a href="{d["path"]}">{d["blog"]}</a>' if article else f'<span>{d["blog"]}</span>')
  schema={'@context':'https://schema.org','@type':'BlogPosting' if article else 'CollectionPage','headline':page_title,'description':desc,'inLanguage':lang,'url':url,'image':BASE+IMAGE,'publisher':{'@type':'Organization','name':BRAND,'url':BASE}}
  if article:
+  for section,photo in d.get('section_photos',{}).items():
+   marker=re.search(r'<h2 id="section-'+str(section)+r'">.*?</h2>',body).group(0)
+   body=body.replace(marker,marker+'\n'+f'<img class="article-photo" style="max-width:640px" src="{photo[0]}" alt="{esc(photo[1])}" width="{photo[2]}" height="{photo[3]}" loading="lazy" decoding="async">',1)
+  hero='' if d.get('section_photos') else f'<img class="article-photo" style="max-width:{d.get("photo_width",640)}px" src="{IMAGE}" alt="{esc(d["alt"])}" width="{d.get("width",1254)}" height="{d.get("height",1254)}" fetchpriority="high">'
   schema.update({'author':{'@type':'Person','name':'Magdalena','url':BASE+'/#about'},'datePublished':d.get('iso_date','2026-11-05'),'dateModified':d.get('iso_date','2026-11-05'),'mainEntityOfPage':url})
   toc='<details class="toc"><summary>'+d['toc']+'</summary><ol>'+''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i,t in headings)+'</ol></details>'
   content=f'''<header class="intro"><p class="eyebrow">{d['category']}</p><h1>{esc(title)}</h1><p class="article-meta">Magdalena · {BRAND} · <time datetime="{d.get('iso_date','2026-11-05')}">{d['date']}</time></p></header>
-<img class="article-photo" style="max-width:{d.get('photo_width',640)}px" src="{IMAGE}" alt="{esc(d['alt'])}" width="{d.get('width',1254)}" height="{d.get('height',1254)}" fetchpriority="high">
+{hero}
 <div class="article-body">{toc}{body}</div><div class="article-end"><a href="{d['path']}">← {d['back']}</a></div>'''
  else:
   content=f'''<header class="intro"><p class="eyebrow">{BRAND} · Halle</p><h1>{d['blog']}</h1><p>{esc(d['intro'])}</p></header>
@@ -123,5 +129,32 @@ for lang in LANGS:
   xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-06</lastmod></url>\n</urlset>')
 sitemap.write_text(xml,encoding='utf-8')
 print('Built 4 hygiene articles and updated the guides and sitemap.')
+
+# Fourth article: gel polish and hard builder gel, with photos beside each material.
+GEL_POLISH = {
+ 'pl': dict(slug='hybryda-a-zel',category='Hybryda i żel',date='8 listopada 2026',desc='Czym różnią się hybryda i żel? Poznaj właściwości materiałów, czas noszenia, sposoby usuwania i moje podejście do wzmacniania naturalnych paznokci.',alt='Kolekcja lakierów hybrydowych w złotych buteleczkach',gel_alt='Zbliżenie różowego żelu budującego nabieranego ze słoiczka',excerpt='Cienka, elastyczna powłoka czy mocniejsza konstrukcja? Wyjaśniam różnice między hybrydą a żelem i kiedy zaplanować kolejną wizytę.'),
+ 'fr': dict(slug='semi-permanent-ou-gel',category='Semi-permanent et gel',date='8 novembre 2026',desc='Vernis semi-permanent ou gel : découvrez leurs propriétés, la durée de tenue, la dépose et mon approche du renforcement des ongles naturels.',alt='Collection de vernis semi-permanents dans des flacons dorés',gel_alt='Gros plan sur un gel de construction rose prélevé dans son pot',excerpt='Une couche fine et souple ou une structure plus solide ? Découvrez les différences entre semi-permanent et gel et quand prévoir votre prochain rendez-vous.'),
+ 'en': dict(slug='gel-polish-or-builder-gel',category='Gel polish and builder gel',date='8 November 2026',desc='Gel polish or builder gel? Learn how the products differ, how long to wear them, how they are removed and my approach to reinforcing natural nails.',alt='A collection of gel polishes in gold bottles',gel_alt='Close-up of pink builder gel being lifted from its pot',excerpt='A thin, flexible coating or a stronger structure? Learn the differences between gel polish and builder gel and when to book your next appointment.'),
+ 'nl': dict(slug='gellak-of-gel',category='Gellak en gel',date='8 november 2026',desc='Gellak of gel? Ontdek de verschillen in eigenschappen, draagtijd en verwijdering en lees hoe ik natuurlijke nagels verstevig.',alt='Een collectie gellakken in gouden flesjes',gel_alt='Close-up van roze bouwgel die uit een potje wordt genomen',excerpt='Een dunne, flexibele laag of een stevigere opbouw? Ontdek de verschillen tussen gellak en gel en wanneer je de volgende afspraak plant.')
+}
+LANGS = {lang: dict(d, **GEL_POLISH[lang], content=f'gel-polish/{lang}.md', width=1449, height=1085, photo_width=640,iso_date='2026-11-08') for lang,d in LANGS.items()}
+IMAGE = '/images/blog-hybryda-lakiery.webp'
+for lang,d in LANGS.items():
+ d['section_photos']={1:(IMAGE,d['alt'],1449,1085),3:('/images/blog-zel-budujacy.webp',d['gel_alt'],1448,1086)}
+ dest=ROOT/article_path(lang).strip('/')/'index.html'
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ dest.write_text(page(lang,True),encoding='utf-8')
+ guide=ROOT/d['path'].strip('/')/'index.html'
+ card=re.search(r'<article class="article-card">.*?</article>',page(lang),re.S).group(0)
+ guide.write_text(guide.read_text().replace('<article class="article-card">',card+'\n<article class="article-card">',1),encoding='utf-8')
+xml=sitemap.read_text()
+for lang in LANGS:
+ url=BASE+article_path(lang)
+ if '<loc>'+url+'</loc>' not in xml:
+  xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-08</lastmod></url>\n</urlset>')
+sitemap.write_text(xml,encoding='utf-8')
+print('Built 4 gel polish and builder gel articles and updated the guides and sitemap.')
+
+
 
 
