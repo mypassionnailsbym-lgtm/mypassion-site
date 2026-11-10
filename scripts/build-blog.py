@@ -55,7 +55,10 @@ def page(lang, article=False):
    body=body.replace('<h2 id="section-5">',extra_photos[lang]+'<h2 id="section-5">',1)
   for section,photo in d.get('section_photos',{}).items():
    marker=re.search(r'<h2 id="section-'+str(section)+r'">.*?</h2>',body).group(0)
-   body=body.replace(marker,marker+'\n'+f'<img class="article-photo" style="max-width:640px" src="{photo[0]}" alt="{esc(photo[1])}" width="{photo[2]}" height="{photo[3]}" loading="lazy" decoding="async">',1)
+   photo_html=f'<img class="article-photo" style="max-width:{photo[5] if len(photo)>5 else 640}px" src="{photo[0]}" alt="{esc(photo[1])}" width="{photo[2]}" height="{photo[3]}" loading="lazy" decoding="async">'
+   if len(photo)>4:
+    photo_html=f'<figure style="max-width:{photo[5] if len(photo)>5 else 640}px;margin:32px auto">'+photo_html+f'<figcaption style="font-size:13px;color:var(--muted);text-align:center">{esc(photo[4])}</figcaption></figure>'
+   body=body.replace(marker,marker+'\n'+photo_html,1)
   hero='' if d.get('section_photos') else f'<img class="article-photo" style="max-width:{d.get("photo_width",640)}px" src="{IMAGE}" alt="{esc(d["alt"])}" width="{d.get("width",1254)}" height="{d.get("height",1254)}" fetchpriority="high">'
   schema.update({'author':{'@type':'Person','name':'Magdalena','url':BASE+'/#about'},'datePublished':d.get('iso_date','2026-11-05'),'dateModified':d.get('iso_date','2026-11-05'),'mainEntityOfPage':url})
   toc='<details class="toc"><summary>'+d['toc']+'</summary><ol>'+''.join(f'<li><a href="#{i}">{esc(t)}</a></li>' for i,t in headings)+'</ol></details>'
@@ -157,6 +160,32 @@ for lang in LANGS:
   xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-08</lastmod></url>\n</urlset>')
 sitemap.write_text(xml,encoding='utf-8')
 print('Built 4 gel polish and builder gel articles and updated the guides and sitemap.')
+
+# Fifth article: lifting, with an accurately captioned removal photograph.
+LIFTING = {
+ 'pl': dict(slug='dlaczego-hybryda-lub-zel-odchodzi',category='Trwałość stylizacji',date='10 listopada 2026',desc='Dlaczego hybryda lub żel odchodzi od paznokcia? Poznaj możliwe przyczyny odspojeń, znaczenie przygotowania i dopasowania materiału oraz zasady postępowania.',alt='Zbliżenie paznokcia podczas usuwania stylizacji, z widocznymi pozostałościami produktu',caption='Paznokieć podczas usuwania stylizacji — widoczne pozostałości produktu.',excerpt='Odspojenie może mieć różne przyczyny. Wyjaśniam, co wpływa na przyczepność produktu i jak postąpić, kiedy materiał zaczyna odchodzić.'),
+ 'fr': dict(slug='pourquoi-semi-permanent-gel-se-decolle',category='Tenue de la pose',date='10 novembre 2026',desc='Pourquoi le vernis semi-permanent ou le gel se décolle-t-il ? Découvrez les causes possibles, le rôle de la préparation et les gestes à adopter.',alt='Gros plan sur un ongle pendant la dépose, avec des résidus de produit visibles',caption='Ongle pendant la dépose — des résidus de produit sont visibles.',excerpt='Un décollement peut avoir plusieurs causes. Découvrez ce qui influence l’adhérence du produit et comment réagir lorsqu’il commence à se soulever.'),
+ 'en': dict(slug='why-gel-polish-or-builder-gel-lifts',category='Manicure wear',date='10 November 2026',desc='Why does gel polish or builder gel lift? Learn about possible causes, preparation, product choice and what to do when your coating starts lifting.',alt='Close-up of a nail during product removal, with visible product residue',caption='Nail during removal — remaining product is visible.',excerpt='Lifting can have several causes. Learn what affects product adhesion and what to do when your coating starts to lift.'),
+ 'nl': dict(slug='waarom-gellak-of-gel-loslaat',category='Houdbaarheid van je manicure',date='10 november 2026',desc='Waarom laat gellak of gel los? Lees over mogelijke oorzaken, de voorbereiding, de materiaalkeuze en wat je kunt doen als je product begint los te laten.',alt='Close-up van een nagel tijdens het verwijderen van de styling, met zichtbare productresten',caption='Nagel tijdens het verwijderen van de styling — met zichtbare productresten.',excerpt='Loslating kan verschillende oorzaken hebben. Ontdek wat de hechting beïnvloedt en wat je kunt doen als het materiaal begint los te laten.')
+}
+LANGS = {lang: dict(d, **LIFTING[lang], content=f'lifting/{lang}.md', width=1122, height=1402, photo_width=440,iso_date='2026-11-10') for lang,d in LANGS.items()}
+IMAGE = '/images/blog-usuwanie-stylizacji.webp'
+for lang,d in LANGS.items():
+ d['section_photos']={7:(IMAGE,d['alt'],1122,1402,d['caption'],440)}
+ dest=ROOT/article_path(lang).strip('/')/'index.html'
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ dest.write_text(page(lang,True),encoding='utf-8')
+ guide=ROOT/d['path'].strip('/')/'index.html'
+ card=re.search(r'<article class="article-card">.*?</article>',page(lang),re.S).group(0)
+ guide.write_text(guide.read_text().replace('<article class="article-card">',card+'\n<article class="article-card">',1),encoding='utf-8')
+xml=sitemap.read_text()
+for lang in LANGS:
+ url=BASE+article_path(lang)
+ if '<loc>'+url+'</loc>' not in xml:
+  xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-10</lastmod></url>\n</urlset>')
+sitemap.write_text(xml,encoding='utf-8')
+print('Built 4 lifting articles and updated the guides and sitemap.')
+
 
 
 
