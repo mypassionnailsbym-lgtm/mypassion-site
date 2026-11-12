@@ -196,3 +196,33 @@ print('Built 4 lifting articles and updated the guides and sitemap.')
 
 
 
+
+
+# Sixth article: breaks from gel polish and builder gel.
+BREAKS = {
+ 'pl': dict(slug='czy-paznokcie-potrzebuja-przerwy',category='Pielęgnacja paznokci',date='12 listopada 2026',desc='Czy paznokcie potrzebują przerwy od hybrydy i żelu? Wyjaśniam mit o oddychaniu płytki, sens przerw i sytuacje, w których warto odłożyć stylizację.',alt='Zbliżenie czterech krótkich naturalnych paznokci podtrzymywanych dłonią w czarnej rękawiczce',excerpt='Paznokcie nie muszą „oddychać”. Wyjaśniam, kiedy przerwa od stylizacji może mieć sens i dlaczego warto kierować się stanem płytki.'),
+ 'fr': dict(slug='pause-semi-permanent-gel',category='Soin des ongles',date='12 novembre 2026',desc='Les ongles ont-ils besoin d’une pause entre les poses de semi-permanent ou de gel ? Comprenez le mythe des ongles qui respirent et quand reporter une pose.',alt='Gros plan sur quatre ongles naturels courts, soutenus par une main gantée de noir',excerpt='Les ongles n’ont pas besoin de « respirer ». Découvrez quand une pause peut être utile et pourquoi leur état réel doit guider la décision.'),
+ 'en': dict(slug='do-nails-need-a-break',category='Nail care',date='12 November 2026',desc='Do nails need a break from gel polish or builder gel? Understand the nail-breathing myth, the purpose of breaks and when to postpone a manicure.',alt='Close-up of four short natural nails supported by a hand in a black glove',excerpt='Nails do not need to “breathe”. Find out when a break can be useful and why the condition of your nails should guide the decision.'),
+ 'nl': dict(slug='hebben-nagels-een-pauze-nodig',category='Nagelverzorging',date='12 november 2026',desc='Hebben nagels een pauze nodig van gellak of gel? Lees waarom nagels niet hoeven te ademen en wanneer je een behandeling beter uitstelt.',alt='Close-up van vier korte natuurlijke nagels, ondersteund door een hand in een zwarte handschoen',excerpt='Nagels hoeven niet te ‘ademen’. Ontdek wanneer een pauze zinvol kan zijn en waarom de toestand van je nagels de doorslag geeft.')
+}
+LANGS = {lang: dict(d, **BREAKS[lang], content=f'breaks/{lang}.md', width=1448, height=1086, photo_width=640,iso_date='2026-11-12') for lang,d in LANGS.items()}
+IMAGE = '/images/blog-przerwa-od-stylizacji.webp'
+for lang,d in LANGS.items():
+ d.pop('section_photos',None)
+ dest=ROOT/article_path(lang).strip('/')/'index.html'
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ dest.write_text(page(lang,True),encoding='utf-8')
+ guide=ROOT/d['path'].strip('/')/'index.html'
+ card=re.search(r'<article class="article-card">.*?</article>',page(lang),re.S).group(0)
+ existing=guide.read_text()
+ if f'href="{article_path(lang)}"' not in existing:
+  guide.write_text(existing.replace('<article class="article-card">',card+'\n<article class="article-card">',1),encoding='utf-8')
+sitemap=ROOT/'sitemap.xml'
+xml=sitemap.read_text()
+for lang in LANGS:
+ url=BASE+article_path(lang)
+ if '<loc>'+url+'</loc>' not in xml:
+  xml=xml.replace('</urlset>','<url><loc>'+url+'</loc><lastmod>2026-11-12</lastmod></url>\n</urlset>')
+sitemap.write_text(xml,encoding='utf-8')
+print('Built 4 nail-break articles and updated the guides and sitemap.')
+
